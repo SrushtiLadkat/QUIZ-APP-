@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="QuizRegistrationApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Science Quiz</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-image: url("https://img.freepik.com/free-vector/curiosity-brain-concept-illustration_114360-10676.jpg?size=626&ext=jpg&ga=GA1.1.2064445370.1710785278&semt=ais");
+      background-size: calc(60%);
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 99vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .form-box {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0px;
+      border-radius: 10px;
+    }
+    .input-box {
+      margin-bottom: 15px;
+    }
+    .input-box input {
+      width: 100%;
+      padding: 7px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    .btn {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+    .error {
+      color: red;
+      font-size: 0.8rem;
+      margin-top: 5px;
+    }
+</style>
+</head>
+<body ng-controller="RegistrationController as regCtrl">
+  <div class="form-box">
+    <h2>Science Quiz Registration</h2>
+    <form action="scienceregis.php" method="post" onsubmit="return validateForm()">
+        <div class="input-box">
+          <input type="text" id="username" name="username" placeholder="Name" required>
+        </div>
+        <div class="input-box">
+          <input type="number" id="age" name="age" placeholder="Age" required>
+        </div>
+        <div class="input-box">
+          <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+        </div>
+        <div class="input-box">
+          <input type="email" id="email" name="email" placeholder="Email" required>
+          <span id="emailError" class="error"></span>
+        </div>
+        <div class="input-box">
+          <input type="password" id="password" name="password" placeholder="Password (min 6 characters)" required>
+          <span id="passwordError" class="error"></span>
+        </div>
+       <button type="submit" class="btn">Register</button>
+       <a href="sciencelogin.html" style="margin-left: 10px;">Already Registered? Login.</a>
+    </form>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script>
+    angular.module('QuizRegistrationApp', [])
+      .controller('RegistrationController', function() {
+        var vm = this;
+
+        vm.user = {
+          username: '',
+          age: '',
+          phone: '',
+          email: '',
+          password: ''
+        };
+
+        vm.submitForm = function() {
+          console.log('Submitting form:', vm.user);
+          // Here you can handle form submission logic, for example, sending data to registration.php
+          // Example: $http.post('registration.php', vm.user).then(function(response) {...});
+          // For demo purposes, redirecting to registration.php
+          window.location.href = 'scienceregis.php';
+        };
+      });
+  </script>
+</body>
+</html>

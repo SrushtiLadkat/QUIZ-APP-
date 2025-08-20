@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="quizApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Quiz Hub</title>
+    <style>
+        html, body {
+          margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-image: url("https://img.freepik.com/free-vector/curiosity-brain-concept-illustration_114360-10676.jpg?size=626&ext=jpg&ga=GA1.1.2064445370.1710785278&semt=ais");
+      background-size: calc(60%);
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 99vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 50px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 500px; 
+        }
+
+        .title {
+            color: rgba(51, 51, 51, 0.9); 
+            font-size: 36px;
+            margin-bottom: 50px; 
+        }
+
+        .test-options {
+            background-color: rgba(255, 255, 255, 0.0); 
+            padding: 20px; 
+            border-radius: 20px; 
+        }
+
+        .test-options button {
+            padding: 10px 20px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #3498db;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .test-options button:hover {
+            background-color: #3498db;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div ng-controller="MainController as mainCtrl" class="container">
+        <h1 class="title">Welcome to Quiz Hub</h1>
+        <div class="test-options">
+            <button ng-click="mainCtrl.register('GK')">General Knowledge Test</button>
+            <button ng-click="mainCtrl.register('History')">History Test</button>
+            <button ng-click="mainCtrl.register('Science')">Science Test</button>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        angular.module('quizApp', [])
+            .controller('MainController', function($window) {
+                var vm = this;
+
+                vm.register = function(testType) {
+                    if (testType === 'GK') {
+                        $window.location.href = 'gk.html';
+                    } else if (testType === 'History') {
+                        $window.location.href = 'history.html';
+                    } else if (testType === 'Science') {
+                        $window.location.href = 'science.html';
+                    }
+                };
+            });
+    </script>
+</body>
+
+</html>

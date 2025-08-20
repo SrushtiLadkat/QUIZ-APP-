@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="quizApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url("https://img.freepik.com/free-vector/curiosity-brain-concept-illustration_114360-10676.jpg?size=626&ext=jpg&ga=GA1.1.2064445370.1710785278&semt=ais");
+            background-size: 1000px; /* Cover the entire viewport */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed; /* Keep the background fixed */
+            height: 90%;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 0px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px; /* Add padding for better readability */
+        }
+
+        #quiz-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+            background-color: rgba(255, 255, 255, 0.4); /* Adjust opacity of quiz container */
+        }
+
+        .question {
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .options input[type="checkbox"] {
+            display: none; /* Hide the actual checkbox */
+        }
+
+        .options input[type="checkbox"]+span {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #3498db;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options input[type="checkbox"]:checked+span {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 30px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #000000;
+        }
+    </style>
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="QuizController as quiz">
+<div id="quiz-container">
+<h1 style="text-align: center;">Quiz</h1>
+<div class="question" ng-repeat="question in quiz.questions">
+<p>{{question.text}}</p>
+<div class="options">
+<label ng-repeat="option in question.options">
+  <input type="radio" ng-model="question.selectedOption" ng-value="option.value">{{option.label}}
+</label>
+</div>
+</div>
+<button ng-click="quiz.submitQuiz()">Submit</button>
+<div id="result">{{quiz.resultMessage}}</div>
+</div>
+<script>
+angular.module('quizApp', [])
+.controller('QuizController', function() {
+  var vm = this;
+
+  vm.questions = [
+    {
+        text: "1. Who painted the Mona Lisa?",
+      options: [
+        { label: "A. Leonardo da Vinci", value: "Leonardo da Vinci" },
+        { label: "B. Vincent van Gogh", value: "Vincent van Gogh" },
+        { label: "C. Pablo Picasso", value: "Pablo Picasso" },
+        { label: "D. Michelangelo", value: "Michelangelo" }
+      ],
+      correctAnswer: "Leonardo da Vinci"
+    },
+    {
+      text: "2. Which planet is known as the 'Red Planet'?",
+      options: [
+        { label: "A. Venus", value: "Venus" },
+        { label: "B. Mars", value: " Mars" },
+        { label: "C. Jupiter", value: "Jupiter" },
+        { label: "D. Saturn", value: "Saturn" }
+      ],
+      correctAnswer: "Mars"
+    },
+    {
+      text: "3. What is the capital city of Australia?",
+      options: [
+        { label: "A. Sydney", value: "Sydney" },
+        { label: "B. Melbourne", value: "Melbourne" },
+        { label: "C. Canberra", value: "Canberra" },
+        { label: "D. Brisbane", value: "Brisbane" }
+      ],
+      correctAnswer: "Canberra"
+    },
+    {
+      text: "4. Who wrote 'Romeo and Juliet'?",
+      options: [
+        { label: "A. William Shakespeare", value: "William Shakespeare" },
+        { label: "B. Charles Dickens", value: "Charles Dickens" },
+        { label: "C. Jane Austen", value: "Jane Austen" },
+        { label: "D. F. Scott Fitzgerald", value: "F. Scott Fitzgerald" }
+      ],
+      correctAnswer: "William Shakespeare"
+    },
+    {
+      text: "5. The Great Wall of China is located in which country?",
+      options: [
+        { label: "A. China", value: "China" },
+        { label: "B. India", value: "India" },
+        { label: "C. Japan", value: "Japan" },
+        { label: "D. South Korea", value: "South Korea" }
+      ],
+      correctAnswer: "China"
+    },
+    {
+      text: "6. Who was the first woman to fly solo across the Atlantic Ocean?",
+      options: [
+        { label: "A. Amelia Earhart", value: "Amelia Earhart" },
+        { label: "B. Bessie Coleman", value: "Bessie Coleman" },
+        { label: "C. Harriet Quimby", value: "Harriet Quimby" },
+        { label: "D. Jacqueline Cochran", value: "Jacqueline Cochran" }
+      ],
+      correctAnswer: "Amelia Earhart"
+    },  
+    {
+      text: "7. Which famous scientist formulated the theory of relativity?",
+      options: [
+        { label: "A. Isaac Newton", value: "Isaac Newton" },
+        { label: "B. Albert Einstein", value: "Albert Einstein" },
+        { label: "C. Galileo Galilei", value: "Galileo Galilei" },
+        { label: "D. Stephen Hawking", value: "Stephen Hawking" }
+      ],
+      correctAnswer: " Albert Einstein"
+    },
+    {
+      text: "8. What is the longest river in the world?",
+      options: [
+        { label: "A. Nile", value: "Nile" },
+        { label: "B. Amazon", value: "Amazon" },
+        { label: "C. Mississippi", value: "Mississippi" },
+        { label: "D. Yangtze", value: "Yangtze" }
+      ],
+      correctAnswer: "Nile"
+    },
+    {
+      text: "9. Who is known as the 'Father of Geometry'",
+      options: [
+        { label: "A. Pythagoras", value: "Pythagoras" },
+        { label: "B. Euclid", value: "Euclid" },
+        { label: "C. Archimedes", value: "Archimedes" },
+        { label: "D. Aristotle", value: "Aristotle" }
+      ],
+      correctAnswer: "Euclid"
+    },
+    {
+      text: "10. Who was the first woman to win a Nobel Prize?",
+      options: [
+        { label: "A. Marie Curie", value: "Marie Curie" },
+        { label: "B. Mother Teresa", value: "Mother Teresa" },
+        { label: "C. Jane Goodall", value: "Jane Goodall" },
+        { label: "D. Malala Yousafzai", value: "Malala Yousafzai" }
+      ],
+      correctAnswer: "Marie Curie"
+    }
+  ];
+
+  vm.submitQuiz = function() {
+    vm.correctAnswers = 0;
+    vm.questions.forEach(function(question) {
+      if (question.selectedOption === question.correctAnswer) {
+        vm.correctAnswers++;
+      }
+    });
+    vm.resultMessage = "Total Correct Answers: " + vm.correctAnswers;
+  };
+});
+</script>
+</body>
+</html>

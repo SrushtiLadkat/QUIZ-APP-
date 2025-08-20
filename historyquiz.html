@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="quizApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url("https://img.freepik.com/free-vector/curiosity-brain-concept-illustration_114360-10676.jpg?size=626&ext=jpg&ga=GA1.1.2064445370.1710785278&semt=ais");
+            background-size: 1000px; /* Cover the entire viewport */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed; /* Keep the background fixed */
+            height: 90%;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 0px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px; /* Add padding for better readability */
+        }
+
+        #quiz-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+            background-color: rgba(255, 255, 255, 0.4); /* Adjust opacity of quiz container */
+        }
+
+        .question {
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .options input[type="checkbox"] {
+            display: none; /* Hide the actual checkbox */
+        }
+
+        .options input[type="checkbox"]+span {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #3498db;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options input[type="checkbox"]:checked+span {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 30px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #000000;
+        }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="QuizController as quiz">
+<div id="quiz-container">
+<h1 style="text-align: center;">Quiz</h1>
+<div class="question" ng-repeat="question in quiz.questions">
+<p>{{question.text}}</p>
+<div class="options">
+<label ng-repeat="option in question.options">
+  <input type="radio" ng-model="question.selectedOption" ng-value="option.value">{{option.label}}
+</label>
+</div>
+</div>
+<button ng-click="quiz.submitQuiz()">Submit</button>
+<div id="result">{{quiz.resultMessage}}</div>
+</div>
+<script>
+angular.module('quizApp', [])
+.controller('QuizController', function() {
+  var vm = this;
+
+  vm.questions = [
+    {
+      text: "1. Who was the first emperor of the Maurya Dynasty in ancient India?",
+      options: [
+        { label: "A. Chandragupta Maurya", value: "Chandragupta Maurya" },
+        { label: "B. Ashoka", value: "Ashoka" },
+        { label: "C. Bindusara", value: "Bindusara" },
+        { label: "D. Bimbisara", value: "Bimbisara" }
+      ],
+      correctAnswer: "Chandragupta Maurya"
+    },
+    {
+      text: "2. The Indus Valley Civilization was mainly located in which modern-day country?",
+      options: [
+        { label: "A. India", value: "India" },
+        { label: "B. Pakistan", value: " Pakistan" },
+        { label: "C. Bangladesh", value: "Bangladesh" },
+        { label: "D. Nepal", value: "Nepal" }
+      ],
+      correctAnswer: "Pakistan"
+    },
+    {
+      text: "3. The Gupta Empire is often referred to as the Golden Age of India. Who was the most famous ruler of the Gupta dynasty?",
+      options: [
+        { label: "A. Chandragupta I", value: "Chandragupta I" },
+        { label: "B. Samudragupta", value: "Samudragupta" },
+        { label: "C. Chandragupta II", value: "Chandragupta II" },
+        { label: "D. Kumaragupta I", value: "Kumaragupta I" }
+      ],
+      correctAnswer: "Chandragupta II"
+    },
+    {
+      text: "4. Who was the Mughal emperor who built the Taj Mahal in memory of his wife Mumtaz Mahal?.",
+      options: [
+        { label: "A. Akbar", value: "Akbar" },
+        { label: "B. Jahangir", value: "Jahangir" },
+        { label: "C. Shah Jahan", value: "Shah Jahan" },
+        { label: "D. Aurangzeb", value: "Aurangzeb" }
+      ],
+      correctAnswer: "Shah Jahan"
+    },
+    {
+      text: "5. The Battle of Plassey, which laid the foundation of British rule in India, was fought in the year ____.",
+      options: [
+        { label: "A. 1757", value: "1757" },
+        { label: "B. 1764", value: "1764" },
+        { label: "C. 1857", value: "1857" },
+        { label: "D. 1947", value: "1947" }
+      ],
+      correctAnswer: "1757"
+    },
+    {
+      text: "6. Who was the leader of the Revolt of 1857, often regarded as the First War of Indian Independence?.",
+      options: [
+        { label: "A. Bahadur Shah II", value: "Bahadur Shah II" },
+        { label: "B. Rani Lakshmibai", value: "Rani Lakshmibai" },
+        { label: "C. Mangal Pandey", value: " Mangal Pandey" },
+        { label: "D. Tantia Tope", value: "Tantia Tope" }
+      ],
+      correctAnswer: "Bahadur Shah II"
+    },  
+    {
+      text: "7. The Swadeshi Movement, a part of the Indian independence movement, was launched in response to which event?",
+      options: [
+        { label: "A. Partition of Bengal", value: "Partition of Bengal" },
+        { label: "B. Jallianwala Bagh Massacre", value: "Jallianwala Bagh Massacre" },
+        { label: "C. Quit India Movement", value: "Quit India Movement" },
+        { label: "D. Simon Commission", value: "Simon Commission" }
+      ],
+      correctAnswer: " Partition of Bengal"
+    },
+    {
+      text: "8. The Dandi March, led by Mahatma Gandhi, was a notable event during which movement?.",
+      options: [
+        { label: "A. Non-Cooperation Movement", value: "Non-Cooperation Movement" },
+        { label: "B. Civil Disobedience Movement", value: "Civil Disobedience Movement" },
+        { label: "C. Khilafat Movement", value: "Khilafat Movement" },
+        { label: "D. Quit India Movement", value: "Quit India Movement" }
+      ],
+      correctAnswer: "Civil Disobedience Movement"
+    },
+    {
+      text: "9. Who was the first woman President of the Indian National Congress?.",
+      options: [
+        { label: "A. Sarojini Naidu", value: "Sarojini Naidu" },
+        { label: "B. Annie Besant", value: "Annie Besant" },
+        { label: "C. Vijaya Lakshmi Pandit", value: "Vijaya Lakshmi Pandit" },
+        { label: "D. Indira Gandhi", value: "Indira Gandhi" }
+      ],
+      correctAnswer: "Sarojini Naidu"
+    },
+    {
+      text: "10. The slogan 'Jai Hind' was popularized by which Indian freedom fighter?.",
+      options: [
+        { label: "A. Subhas Chandra Bose", value: "Subhas Chandra Bose" },
+        { label: "B. Bhagat Singh", value: "Bhagat Singh" },
+        { label: "C. Lala Lajpat Rai", value: "Lala Lajpat Rai" },
+        { label: "D. Jawaharlal Nehru", value: "Jawaharlal Nehru" }
+      ],
+      correctAnswer: "Subhas Chandra Bose"
+    }
+  ];
+
+  vm.submitQuiz = function() {
+    vm.correctAnswers = 0;
+    vm.questions.forEach(function(question) {
+      if (question.selectedOption === question.correctAnswer) {
+        vm.correctAnswers++;
+      }
+    });
+    vm.resultMessage = "Total Correct Answers: " + vm.correctAnswers;
+  };
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="quizApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url("https://img.freepik.com/free-vector/curiosity-brain-concept-illustration_114360-10676.jpg?size=626&ext=jpg&ga=GA1.1.2064445370.1710785278&semt=ais");
+            background-size: 1000px; /* Cover the entire viewport */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed; /* Keep the background fixed */
+            height: 90%;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 0px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px; /* Add padding for better readability */
+        }
+
+        #quiz-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+            background-color: rgba(255, 255, 255, 0.4); /* Adjust opacity of quiz container */
+        }
+
+        .question {
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .options input[type="checkbox"] {
+            display: none; /* Hide the actual checkbox */
+        }
+
+        .options input[type="checkbox"]+span {
+            display: inline-block;
+            padding: 5px 10px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #3498db;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .options input[type="checkbox"]:checked+span {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 30px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #000000;
+        }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="QuizController as quiz">
+<div id="quiz-container">
+<h1 style="text-align: center;">Quiz</h1>
+<div class="question" ng-repeat="question in quiz.questions">
+<p>{{question.text}}</p>
+<div class="options">
+<label ng-repeat="option in question.options">
+  <input type="radio" ng-model="question.selectedOption" ng-value="option.value">{{option.label}}
+</label>
+</div>
+</div>
+<button ng-click="quiz.submitQuiz()">Submit</button>
+<div id="result">{{quiz.resultMessage}}</div>
+</div>
+<script>
+angular.module('quizApp', [])
+.controller('QuizController', function() {
+  var vm = this;
+
+  vm.questions = [
+    {
+      text: "1. What is the chemical symbol for water?",
+      options: [
+        { label: "A. H2O", value: "H2O" },
+        { label: "B. CO2", value: "CO2" },
+        { label: "C. NaCl", value: "NaCl" },
+        { label: "D. CH4", value: "CH4" }
+      ],
+      correctAnswer: "H2O"
+    },
+    {
+      text: "2. Which planet is known as the 'Red Planet'?",
+      options: [
+        { label: "A. Venus", value: "Venus" },
+        { label: "B. Mars", value: " Mars" },
+        { label: "C. Jupiter", value: "Jupiter" },
+        { label: "D. Saturn", value: "Saturn" }
+      ],
+      correctAnswer: "Mars"
+    },
+    {
+      text: "3. What is the hardest natural substance on Earth?",
+      options: [
+        { label: "A. Iron", value: "Iron" },
+        { label: "B. Diamond", value: "Diamond" },
+        { label: "C. Quartz", value: "Quartz" },
+        { label: "D. Titanium", value: "Titanium" }
+      ],
+      correctAnswer: "Diamond"
+    },
+    {
+      text: "4. What is the process by which plants make their food?",
+      options: [
+        { label: "A. Respiration", value: "Respiration" },
+        { label: "B. Digestion", value: "Digestion" },
+        { label: "C. Photosynthesis", value: "Photosynthesis" },
+        { label: "D. Transpiration", value: "Transpiration" }
+      ],
+      correctAnswer: "Photosynthesis"
+    },
+    {
+      text: "5. What is the unit of measurement for electric current?",
+      options: [
+        { label: "A. Volt", value: "Volt" },
+        { label: "B. Ampere", value: "Ampere" },
+        { label: "C. Watt", value: "Watt" },
+        { label: "D. Ohm", value: "Ohm" }
+      ],
+      correctAnswer: "Ampere"
+    },
+    {
+      text: "6. Which of the following is NOT a type of cloud?",
+      options: [
+        { label: "A. Stratus", value: "Stratus" },
+        { label: "B. Cirrus", value: "Cirrus" },
+        { label: "C. Corona", value: "Corona" },
+        { label: "D. Cumulus", value: "Cumulus" }
+      ],
+      correctAnswer: "Corona"
+    },  
+    {
+      text: "7. What is the main component of the Earth's atmosphere?",
+      options: [
+        { label: "A. Oxygen", value: "Oxygen" },
+        { label: "B. Nitrogen", value: "Nitrogen" },
+        { label: "C. Carbon dioxide", value: "Carbon dioxide" },
+        { label: "D. Hydrogen", value: "Hydrogen" }
+      ],
+      correctAnswer: " Nitrogen"
+    },
+    {
+      text: "8. What is the chemical symbol for gold?",
+      options: [
+        { label: "A. Au", value: "Au" },
+        { label: "B. Ag", value: "Ag" },
+        { label: "C. Fe", value: "Fe" },
+        { label: "D. Pb", value: "Pb" }
+      ],
+      correctAnswer: "Au"
+    },
+    {
+      text: "9. Which of the following is a renewable source of energy?",
+      options: [
+        { label: "A. Coal", value: "Coal" },
+        { label: "B. Natural Gas", value: "Natural Gas" },
+        { label: "C. Solar", value: "Solar" },
+        { label: "D. Petroleum", value: "Petroleum" }
+      ],
+      correctAnswer: "Solar"
+    },
+    {
+      text: "10. What is the largest organ in the human body?",
+      options: [
+        { label: "A. Liver", value: "Liver" },
+        { label: "B. Skin", value: "Skin" },
+        { label: "C. Heart", value: "Heart" },
+        { label: "D. Brain", value: "Brain" }
+      ],
+      correctAnswer: "Skin"
+    }
+  ];
+
+  vm.submitQuiz = function() {
+    vm.correctAnswers = 0;
+    vm.questions.forEach(function(question) {
+      if (question.selectedOption === question.correctAnswer) {
+        vm.correctAnswers++;
+      }
+    });
+    vm.resultMessage = "Total Correct Answers: " + vm.correctAnswers;
+  };
+});
+</script>
+</body>
+</html>
